@@ -25,6 +25,37 @@ services:
     networks:
       - backend
 
+  db:
+    image: mysql:9.1
+    container_name: mysql_host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: springmicroserviceuser
+      MYSQL_PASSWORD: 111111
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./init:/docker-entrypoint-initdb.d
+    ports:
+    - 3306:3306
+    networks:
+      - backend
+
+  # phpMyAdmin
+  phpmyadmin:
+    container_name: test_phpmyadmin
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=mysql_host
+    - PMA_USER=root
+    - PMA_PASSWORD=root
+    ports:
+    - 5051:80
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
