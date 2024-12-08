@@ -38,32 +38,25 @@
     2 ) Enter username and password (admin : admin)
     3 ) Create Client named for spring-boot-microservice-keycloak and define it in Keycloak config of user service
     4 ) Change client's access type from public to confidential
-    5 ) Get secret key to define clientSecret in Keycloak config of user service
+    5 ) Get secret key to define clientSecret in Keycloak config of user service.
+    Open file  `configserver/src/main/resources/configurations/user-service.properties` and change secret key at `keycloakConfig.clientSecret`
     6 ) Define roles for Admin and User as ROLE_ADMIN and ROLE_USER
 ```
 
-<b>4 )</b> Implement Rabbitmq Settings
+<b>4 )</b> Build services by Docker
 ```
-    1 ) Open Rabbitmq on the Browser through http://localhost:15672
-    2 ) Enter username and password (rabbitmq : 123456)
-    3 ) Open Admin section in the navbar
-    4 ) Define new user named guest and its username , password (guest : guest , role : administrator) , next give all permissiion (Virtual host : "/" , regexp : ".*")
+    docker compose -f docker-compose-service.yml build --no-cache
 ```
 
-<b>Maven></b>
+<b>5 )</b> Start 2 server discoveryserver and configserver on Docker container. Wait until discoveryserver and configserver started.
+```
+    docker compose -f docker-compose-service.yml up -d discoveryserver configserver
+```
 
-<b>1 )</b> Start Keycloak and Rabbit through Docker
-
-<b>2 )</b> Implement their settings
-
-<b>3 )</b> Download your project from this link `https://github.com/Rapter1990/SpringBootMicroservices`
-
-<b>4 )</b> Go to the project's home directory :  `cd SpringBootMicroservices`
-
-<b>5 )</b> Create a jar file though this command `mvn clean install`
-
-<b>6 )</b> Run the project though this command `mvn spring-boot:run`
-
+<b>6 )</b> Start other services on Docker container
+```
+    docker compose -f docker-compose-service.yml up -d
+```
 
 ### To execute the API's through the gateway
     1) http://localhost:8600/api/v1/users/signup
@@ -71,7 +64,7 @@
     3) http://localhost:8600/api/v1/users/info 
     4) http://localhost:8600/api/v1/management/admin_role/create/{user_id} 
     5) http://localhost:8600/api/v1/management/admin_role/alladvertisements
-    6) http://localhost:8600/api/v1/management/admin_role/alladvertisements/{advertisement_id} 
+    6) http://localhost:8600/api/v1/management/admin_role/advertisement/{advertisement_id} 
     7) http://localhost:8600/api/v1/management/admin_role/update/{advertisement_id}
     8) http://localhost:8600/api/v1/management/admin_role/delete/{advertisement_id} 
     9) http://localhost:8600/api/v1/management/admin_role/advertisement/{advertisement_id}/approve
@@ -138,7 +131,7 @@ Explore Rest APIs
   </tr>
   <tr>
       <td>GET</td>
-      <td>alladvertisements/{advertisement_id}</td>
+      <td>advertisement/{advertisement_id}</td>
       <td>Get advertisement by Id From Admin</td>
       <td></td>
       <td><a href="README.md#advertisementById">Info</a></td>
@@ -193,7 +186,7 @@ Explore Rest APIs
   <tr>
       <td>GET</td>
       <td>alladvertisements</td>
-      <td>alladvertisements/{advertisement_id}</td>
+      <td>advertisement/{advertisement_id}</td>
       <td></td>
       <td></td>
       <td></td>
@@ -277,7 +270,7 @@ Explore Rest APIs
 
 ##### <a id="advertisementById">Get advertisement by Id From Admin
 ```
-    http://localhost:8600/api/v1/management/admin_role/alladvertisements/{advertisement_id} 
+    http://localhost:8600/api/v1/management/admin_role/advertisement/{advertisement_id} 
     Bearer Token : Access Token of Admin from Keycloak
 ```
 
@@ -301,7 +294,7 @@ Explore Rest APIs
 
 ##### <a id="advertisementByIdFromUser">Get advertisement by Id From User
 ```
-    http://localhost:8600/api/v1/management/user_role/alladvertisements/{advertisement_id} 
+    http://localhost:8600/api/v1/management/user_role/advertisement/{advertisement_id} 
     Bearer Token : Access Token of Admin from Keycloak
 ```
 

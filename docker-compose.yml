@@ -1,6 +1,4 @@
 services:
-
-
   keycloak:
     image: quay.io/keycloak/keycloak:18.0.2
     environment:
@@ -16,9 +14,6 @@ services:
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: "rmq3"
-    environment:
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "123456"
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -27,7 +22,6 @@ services:
 
   db:
     image: mysql:9.1
-    container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test_database
@@ -44,13 +38,12 @@ services:
 
   # phpMyAdmin
   phpmyadmin:
-    container_name: test_phpmyadmin
     image: lscr.io/linuxserver/phpmyadmin:latest
     environment:
     - PMA_ARBITRARY=1
-    - PMA_HOSTS=mysql_host
-    - PMA_USER=root
-    - PMA_PASSWORD=root
+    - PMA_HOSTS=db
+    - PMA_USER=springmicroserviceuser
+    - PMA_PASSWORD=111111
     ports:
     - 5051:80
     networks:

@@ -1,0 +1,79 @@
+services:
+  discoveryserver:
+    build: ./discoveryserver
+    ports:
+      - "8761:8761"
+    networks:
+      - springbootmicroservices_backend
+
+  configserver:
+    build: ./configserver
+    depends_on:
+      - discoveryserver
+    links:
+      - discoveryserver
+    ports:
+      - "9191:9191"
+    networks:
+      - springbootmicroservices_backend
+
+  managementservice:
+    build: ./management-service
+    depends_on:
+      - discoveryserver
+      - configserver
+    links:
+      - discoveryserver
+      - configserver
+    networks:
+      - springbootmicroservices_backend
+
+  advertisementservice:
+    build: ./advertisement-service
+    depends_on:
+      - discoveryserver
+      - configserver
+    links:
+      - discoveryserver
+      - configserver
+    networks:
+      - springbootmicroservices_backend
+
+  userservice:
+    build: ./user-service
+    depends_on:
+      - discoveryserver
+      - configserver
+    links:
+      - discoveryserver
+      - configserver
+    networks:
+      - springbootmicroservices_backend
+
+  reportservice:
+    build: ./report-service
+    depends_on:
+      - discoveryserver
+      - configserver
+    links:
+      - discoveryserver
+      - configserver
+    networks:
+      - springbootmicroservices_backend
+
+  apigateway:
+    build: ./api-gateway
+    depends_on:
+      - discoveryserver
+      - configserver
+    links:
+      - discoveryserver
+      - configserver
+    ports:
+      - "8600:8600"
+    networks:
+      - springbootmicroservices_backend
+      
+networks:
+  springbootmicroservices_backend:
+    external: true

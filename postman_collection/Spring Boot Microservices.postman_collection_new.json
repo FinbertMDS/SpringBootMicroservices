@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b11d9e05-89be-4fc8-a31f-3dafe0ac4da0",
+		"_postman_id": "c91f5b22-c875-4aab-9acb-1fa81dbe5692",
 		"name": "Spring Boot Microservices",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "350399"
 	},
 	"item": [
 		{
@@ -251,7 +252,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8600/api/v1/admin_role/alladvertisements/1",
+					"raw": "http://localhost:8600/api/v1/admin_role/advertisement/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -261,7 +262,7 @@
 						"api",
 						"v1",
 						"admin_role",
-						"alladvertisements",
+						"advertisement",
 						"1"
 					]
 				}

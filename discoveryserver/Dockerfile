@@ -11,10 +11,12 @@ COPY src src
 RUN ./mvnw package -Dmaven.test.skip
 
 # For Java 11,
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM eclipse-temurin:11-jre
 
 WORKDIR /discoveryserver
 
 COPY --from=build /app/target/*.jar /discoveryserver/discoveryserver-0.0.1-SNAPSHOT.jar
 
 ENTRYPOINT ["java","-jar","discoveryserver-0.0.1-SNAPSHOT.jar"]
+
+EXPOSE 8761
